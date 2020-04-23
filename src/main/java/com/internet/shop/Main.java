@@ -11,9 +11,16 @@ public class Main {
     public static void main(String[] args) {
         ProductService productService = (ProductService) injector.getInstance(ProductService.class);
         initializeDatabase(productService);
-        System.out.println(productService.get(1L));
-        System.out.println(productService.get(2L));
-        System.out.println(productService.get(3L));
+        System.out.println("Products : ");
+        System.out.println(productService.getAllProducts());
+        System.out.println("First product with new price 1600 : ");
+        Product productToUpdate = productService.getProduct(1L).get();
+        productToUpdate.setPrice(BigDecimal.valueOf(1600));
+        productService.update(productToUpdate);
+        System.out.println(productService.getProduct(1L));
+        System.out.println("Products after deleting third one : ");
+        productService.delete(3L);
+        System.out.println(productService.getAllProducts());
     }
 
     private static void initializeDatabase(ProductService productService) {

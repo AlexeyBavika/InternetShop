@@ -1,15 +1,15 @@
-package com.internet.shop.dao;
+package com.internet.shop.db;
 
-import com.internet.shop.model.Bucket;
 import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
+import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
     public static final List<Product> products = new ArrayList<>();
-    public static final List<Bucket> buckets = new ArrayList<>();
+    public static final List<ShoppingCart> SHOPPING_CARTS = new ArrayList<>();
     public static final List<User> users = new ArrayList<>();
     public static final List<Order> orders = new ArrayList<>();
     private static Long productId = 0L;
@@ -23,10 +23,10 @@ public class Storage {
         products.add(product);
     }
 
-    public static void addBucket(Bucket bucket) {
+    public static void addBucket(ShoppingCart shoppingCart) {
         bucketId++;
-        bucket.setId(bucketId);
-        buckets.add(bucket);
+        shoppingCart.setId(bucketId);
+        SHOPPING_CARTS.add(shoppingCart);
     }
 
     public static void addUser(User user) {

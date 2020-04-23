@@ -20,7 +20,7 @@ public class Injector {
         try {
             classes.addAll(getClasses(mainPackageName));
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Can't get information about all classes", e);
+            throw new RuntimeException("Can't getProduct information about all classes", e);
         }
     }
 
@@ -85,7 +85,7 @@ public class Injector {
         try {
             return field.get(instance) != null;
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Can't get access to field");
+            throw new RuntimeException("Can't getProduct access to field");
         }
     }
 

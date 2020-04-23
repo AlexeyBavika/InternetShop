@@ -1,10 +1,10 @@
 package com.internet.shop.dao.implementation;
 
 import com.internet.shop.dao.ProductDao;
-import com.internet.shop.dao.Storage;
+import com.internet.shop.db.Storage;
 import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Product;
-import java.util.NoSuchElementException;
+import java.util.List;
 import java.util.Optional;
 
 @Dao
@@ -18,19 +18,26 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> get(Long id) {
-        return Optional.ofNullable(Storage.products.stream()
+        return Storage.products.stream()
                 .filter(item -> item.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can`t find item with id " + id)));
+                .findFirst();
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return Storage.products;
     }
 
     @Override
     public Product update(Product product) {
-        return null;
+        Product productToUpdate = get(product.getId()).get();
+        productToUpdate.setName(product.getName());
+        productToUpdate.setPrice(product.getPrice());
+        return productToUpdate;
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        return Storage.products.removeIf(product -> product.getId().equals(id));
     }
 }

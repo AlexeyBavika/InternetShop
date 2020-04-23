@@ -2,10 +2,10 @@ package com.internet.shop.model;
 
 import java.util.List;
 
-public class Bucket {
+public class ShoppingCart {
     private Long id;
     private List<Product> products;
-    private Long orderId;
+    private User user;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class Bucket {
         this.products = products;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public User getUser() {
+        return user;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
