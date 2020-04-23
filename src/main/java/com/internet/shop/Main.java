@@ -14,7 +14,7 @@ public class Main {
         System.out.println("Products : ");
         System.out.println(productService.getAllProducts());
         System.out.println("First product with new price 1600 : ");
-        Product productToUpdate = productService.getProduct(1L).get();
+        Product productToUpdate = productService.getProduct(1L);
         productToUpdate.setPrice(BigDecimal.valueOf(1600));
         productService.update(productToUpdate);
         System.out.println(productService.getProduct(1L));

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Storage {
     public static final List<Product> products = new ArrayList<>();
-    public static final List<ShoppingCart> SHOPPING_CARTS = new ArrayList<>();
+    public static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
     public static final List<User> users = new ArrayList<>();
     public static final List<Order> orders = new ArrayList<>();
     private static Long productId = 0L;
@@ -26,7 +26,7 @@ public class Storage {
     public static void addBucket(ShoppingCart shoppingCart) {
         bucketId++;
         shoppingCart.setId(bucketId);
-        SHOPPING_CARTS.add(shoppingCart);
+        shoppingCarts.add(shoppingCart);
     }
 
     public static void addUser(User user) {
