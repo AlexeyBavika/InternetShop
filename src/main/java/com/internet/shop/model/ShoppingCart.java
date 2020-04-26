@@ -1,11 +1,17 @@
 package com.internet.shop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
     private Long id;
-    private List<Product> products;
     private User user;
+    private List<Product> products;
+
+    public ShoppingCart(User user) {
+        this.user = user;
+        products = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -13,6 +19,14 @@ public class ShoppingCart {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Product> getProducts() {
@@ -23,11 +37,4 @@ public class ShoppingCart {
         this.products = products;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
