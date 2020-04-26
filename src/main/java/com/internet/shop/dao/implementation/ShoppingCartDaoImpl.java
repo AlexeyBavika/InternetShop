@@ -6,6 +6,7 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.ShoppingCart;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
@@ -30,10 +31,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
-        ShoppingCart shoppingCartToUpdate = getShoppingCart(shoppingCart.getId()).get();
-        shoppingCartToUpdate.setUser(shoppingCart.getUser());
-        shoppingCartToUpdate.setProducts(shoppingCart.getProducts());
-        return shoppingCartToUpdate;
+        IntStream.range(0, Storage.shoppingCarts.size())
+                .filter(sc -> shoppingCart.getId().equals(Storage.shoppingCarts.get(sc).getId()))
+                .forEach(i -> Storage.shoppingCarts.set(i, shoppingCart));
+        return shoppingCart;
     }
 
     @Override
