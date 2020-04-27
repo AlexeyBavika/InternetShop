@@ -21,28 +21,38 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(List<Product> products, User user) {
         shoppingCartService.clear(shoppingCartService.getByUserId(user.getId()));
-        return orderDao.createOrder(new Order(user, products));
+        return orderDao.create(new Order(user, products));
     }
 
     @Override
     public List<Order> getUserOrders(User user) {
-        return orderDao.getAllOrders().stream()
+        return orderDao.getAll().stream()
                 .filter(order -> order.getUser().equals(user))
                 .collect(Collectors.toList());
     }
 
     @Override
+    public Order create(Order element) {
+        return orderDao.create(element);
+    }
+
+    @Override
     public Order get(Long id) {
-        return orderDao.getOrder(id).get();
+        return orderDao.get(id).get();
     }
 
     @Override
     public List<Order> getAll() {
-        return orderDao.getAllOrders();
+        return orderDao.getAll();
+    }
+
+    @Override
+    public Order update(Order element) {
+        return orderDao.update(element);
     }
 
     @Override
     public boolean delete(Long id) {
-        return orderDao.deleteOrder(id);
+        return orderDao.delete(id);
     }
 }

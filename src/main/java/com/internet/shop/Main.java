@@ -23,15 +23,15 @@ public class Main {
         productService.create(audi);
         productService.create(bugatti);
         productService.create(toDelete);
-        System.out.println("All products : " + productService.getAllProducts());
-        System.out.println("Product with id 2 : " + productService.getProduct(2L));
+        System.out.println("All products : " + productService.getAll());
+        System.out.println("Product with id 2 : " + productService.get(2L));
         productService.delete(toDelete.getId());
         System.out.println("All products after deleting last : "
-                + productService.getAllProducts());
+                + productService.getAll());
         System.out.println("Modified price of product with id 1 : ");
         bmv.setPrice(new BigDecimal(1600));
         productService.update(bmv);
-        System.out.println(productService.getAllProducts() + "\n" + "\n");
+        System.out.println(productService.getAll() + "\n" + "\n");
 
         var userService = (UserService) injector.getInstance(UserService.class);
         User alexey = new User("Alexey", "alexx", "133");

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Dao
 public class ProductDaoImpl implements ProductDao {
-
     @Override
     public Product create(Product product) {
         Storage.addProduct(product);
@@ -24,7 +23,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         return Storage.products;
     }
 
