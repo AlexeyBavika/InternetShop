@@ -9,28 +9,27 @@ import java.util.Optional;
 
 @Dao
 public class UserDaoImpl implements UserDao {
-
     @Override
-    public User createUser(User user) {
+    public User create(User user) {
         Storage.addUser(user);
         return user;
     }
 
     @Override
-    public Optional<User> getUser(Long userId) {
+    public Optional<User> get(Long userId) {
         return Storage.users.stream()
                 .filter(user -> user.getId().equals(userId))
                 .findFirst();
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         return Storage.users;
     }
 
     @Override
-    public User updateUser(User user) {
-        User userToUpdate = getUser(user.getId()).get();
+    public User update(User user) {
+        User userToUpdate = get(user.getId()).get();
         userToUpdate.setName(user.getName());
         userToUpdate.setLogin(user.getLogin());
         userToUpdate.setPassword(user.getPassword());
@@ -38,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean deleteUser(Long id) {
+    public boolean delete(Long id) {
         return Storage.users.removeIf(user -> user.getId().equals(id));
     }
 }

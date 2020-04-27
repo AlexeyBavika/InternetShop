@@ -10,27 +10,26 @@ import java.util.stream.IntStream;
 
 @Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
-
     @Override
-    public ShoppingCart createShoppingCart(ShoppingCart shoppingCart) {
+    public ShoppingCart create(ShoppingCart shoppingCart) {
         Storage.addBucket(shoppingCart);
         return shoppingCart;
     }
 
     @Override
-    public Optional<ShoppingCart> getShoppingCart(Long id) {
+    public Optional<ShoppingCart> get(Long id) {
         return Storage.shoppingCarts.stream()
                 .filter(shoppingCart -> shoppingCart.getId().equals(id))
                 .findFirst();
     }
 
     @Override
-    public List<ShoppingCart> getAllShoppingCarts() {
+    public List<ShoppingCart> getAll() {
         return Storage.shoppingCarts;
     }
 
     @Override
-    public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
+    public ShoppingCart update(ShoppingCart shoppingCart) {
         IntStream.range(0, Storage.shoppingCarts.size())
                 .filter(sc -> shoppingCart.getId().equals(Storage.shoppingCarts.get(sc).getId()))
                 .forEach(i -> Storage.shoppingCarts.set(i, shoppingCart));
@@ -38,7 +37,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
-    public boolean deleteShoppingCart(Long id) {
+    public boolean delete(Long id) {
         return Storage.shoppingCarts.removeIf(shoppingCart -> shoppingCart.getId().equals(id));
     }
 }
