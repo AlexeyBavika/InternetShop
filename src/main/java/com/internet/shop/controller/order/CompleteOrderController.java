@@ -1,6 +1,7 @@
 package com.internet.shop.controller.order;
 
 import com.internet.shop.lib.Injector;
+import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.service.OrderService;
 import com.internet.shop.service.ShoppingCartService;
 import java.io.IOException;
@@ -21,10 +22,10 @@ public class CompleteOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-        orderService.completeOrder(shoppingCartService
-                .getByUserId(Long.valueOf(req.getParameter("user_id"))).getProducts(),
-                shoppingCartService.getByUserId(Long.valueOf(req.getParameter("user_id")))
-                        .getUser());
+        ShoppingCart shoppingCart = shoppingCartService.getByUserId(Long.valueOf(req
+                .getParameter("user_id")));
+        orderService.completeOrder(shoppingCartService.getAllProducts(shoppingCart), shoppingCart
+                .getUser());
         resp.sendRedirect("/getAllOrders");
     }
 }
