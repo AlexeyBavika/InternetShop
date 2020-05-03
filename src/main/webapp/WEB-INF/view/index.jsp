@@ -10,5 +10,6 @@
 <a href="/allProducts">All products</a>
 <a href="/addProduct">Add product</a>
 <a href="/shoppingCart">Shopping cart</a>
+<a href="/editProducts">Edit products</a>
 </body>
 </html>
