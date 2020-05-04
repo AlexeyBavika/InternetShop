@@ -9,7 +9,7 @@ import com.internet.shop.service.UserService;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
-    UserService userService;
+    private UserService userService;
 
     @Override
     public User login(String login, String password) throws AuthenticationException {
