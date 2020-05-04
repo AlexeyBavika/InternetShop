@@ -6,6 +6,7 @@
 <body>
 <h1>Hello World</h1>
 <a href="/register">Registration</a>
+<a href="/login">Login</a>
 <a href="/allUsers">All users</a>
 <a href="/allProducts">All products</a>
 <a href="/addProduct">Add product</a>
