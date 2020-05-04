@@ -29,6 +29,6 @@
         </td>
     </tr>
     </c:forEach>
-    <a href="/createOrder?user_id=1">Create order</a>
+    <a href="/completeOrder">Create order</a>
 </body>
 </html>
