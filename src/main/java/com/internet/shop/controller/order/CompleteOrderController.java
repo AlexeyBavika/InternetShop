@@ -23,7 +23,7 @@ public class CompleteOrderController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         ShoppingCart shoppingCart = shoppingCartService
-                .getByUserId(Long.valueOf(req.getSession().getAttribute("user_id").toString()));
+                .getByUserId((Long)req.getSession().getAttribute("user_id"));
         orderService.completeOrder(shoppingCartService.getAllProducts(shoppingCart), shoppingCart
                 .getUser());
         resp.sendRedirect("/getAllOrders");
