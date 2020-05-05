@@ -5,7 +5,7 @@ import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +21,8 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User admin = new User("adminovich", "admin", "123",
-                List.of(Role.of("ADMIN")));
-        User user = new User("Alexey", "Alex", "123", List.of(Role.of("USER")));
+                Set.of(Role.of("ADMIN")));
+        User user = new User("Alexey", "Alex", "123", Set.of(Role.of("USER")));
         userService.create(admin);
         userService.create(user);
         req.getRequestDispatcher("/WEB-INF/view/inject.jsp").forward(req, resp);
