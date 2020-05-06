@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
-    private static Logger logger = Logger.getLogger(LoginController.class);
+    private static final Logger logger = Logger.getLogger(LoginController.class);
     private final AuthenticationService authenticationService
             = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
 

@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 public class AuthorizationFilter implements Filter {
     private static final String USER_ID = "user_id";
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
-    private static Logger logger = Logger.getLogger(LoginController.class);
+    private static final Logger logger = Logger.getLogger(LoginController.class);
     private final UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
     private Map<String, List<Role.RoleName>> urls = new HashMap<>();
 
