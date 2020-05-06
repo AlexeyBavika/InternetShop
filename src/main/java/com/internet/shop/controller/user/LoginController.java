@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
+    private static Logger logger = Logger.getLogger(LoginController.class);
     private final AuthenticationService authenticationService
             = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
 
@@ -36,6 +38,7 @@ public class LoginController extends HttpServlet {
         } catch (AuthenticationException e) {
             req.setAttribute("errorMessage", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+            logger.error(e.getMessage());
             return;
         }
         resp.sendRedirect("/");

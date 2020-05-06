@@ -1,5 +1,6 @@
 package com.internet.shop.filter;
 
+import com.internet.shop.controller.user.LoginController;
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
@@ -17,11 +18,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 @WebFilter("/*")
 public class AuthorizationFilter implements Filter {
     private static final String USER_ID = "user_id";
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
+    private static Logger logger = Logger.getLogger(LoginController.class);
     private final UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
     private Map<String, List<Role.RoleName>> urls = new HashMap<>();
 
@@ -59,6 +62,7 @@ public class AuthorizationFilter implements Filter {
         if (isAuthorized(user, urls.get(url))) {
             filterChain.doFilter(request, response);
         } else {
+            logger.warn("User access denied to url " + url);
             request.getRequestDispatcher("/WEB-INF/view/accessDenied.jsp")
                     .forward(request, response);
         }
