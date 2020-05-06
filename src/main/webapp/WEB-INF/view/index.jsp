@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>Hello World</h1>
+<a href="/inject">Inject data</a>
 <a href="/register">Registration</a>
 <a href="/login">Login</a>
 <a href="/allUsers">All users</a>
@@ -12,5 +13,6 @@
 <a href="/addProduct">Add product</a>
 <a href="/shoppingCart">Shopping cart</a>
 <a href="/editProducts">Edit products</a>
+<a href="/logout">Logout</a>
 </body>
 </html>
