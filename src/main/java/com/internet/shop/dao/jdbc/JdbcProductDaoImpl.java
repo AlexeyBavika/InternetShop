@@ -21,10 +21,14 @@ public class JdbcProductDaoImpl implements ProductDao {
         String query = "INSERT INTO products (name, price) values(?,?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection
-                    .prepareStatement(query);
+                    .prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while (resultSet.next()) {
+                product.setId(resultSet.getLong(1));
+            }
             return product;
         } catch (SQLException e) {
             throw new DataProcessingException("Creation of product is failed", e);
