@@ -49,6 +49,7 @@ public class JdbcUserDaoImpl implements UserDao {
             while (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
             }
+            addUserRoles(user);
             return user;
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t create user", e);
@@ -163,11 +164,27 @@ public class JdbcUserDaoImpl implements UserDao {
             for (Role role : user.getRoles()) {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, user.getId());
-                statement.setLong(2, role.getId());
+                statement.setLong(2, getRoleIdByName(role.getRoleName()));
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add roles of user", e);
         }
+    }
+
+    private Long getRoleIdByName(Role.RoleName roleName) {
+        String query = "SELECT id FROM roles WHERE role_name = ?";
+        Long id = null;
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, roleName.name());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getLong("id");
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't add roles of user", e);
+        }
+        return id;
     }
 }
