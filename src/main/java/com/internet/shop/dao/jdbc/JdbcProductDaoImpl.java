@@ -49,7 +49,6 @@ public class JdbcProductDaoImpl implements ProductDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Getting of product with id = "
                     + id + " is failed", e);
-
         }
     }
 

@@ -2,14 +2,12 @@ package com.internet.shop.dao.implementation;
 
 import com.internet.shop.dao.OrderDao;
 import com.internet.shop.db.Storage;
-import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Order;
 import com.internet.shop.model.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
@@ -32,7 +30,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order update(Order order) {
         Order orderToUpdate = get(order.getId()).get();
-        orderToUpdate.setUser(order.getUser());
+        orderToUpdate.setUser(order.getUserId());
         orderToUpdate.setProducts(order.getProducts());
         return orderToUpdate;
     }
@@ -45,7 +43,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getUserOrders(User user) {
         return getAll().stream()
-                .filter(order -> order.getUser().equals(user))
+                .filter(order -> order.getUserId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 }
