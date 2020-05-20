@@ -9,7 +9,8 @@ CREATE TABLE users
     id       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name     VARCHAR(30)     NOT NULL,
     login    VARCHAR(30)     NOT NULL,
-    password VARCHAR(30)     NOT NULL
+    password VARCHAR(256)     NOT NULL,
+    salt     VARBINARY(30)   NOT NULL
 );
 
 CREATE TABLE roles
@@ -64,12 +65,12 @@ CREATE TABLE orders_products
 );
 
 INSERT INTO users
-    (name, login, password)
-VALUES ("Adminovich", "admin", "1"),
-       ("Alexey", "Alex", "1"),
-       ("TestUser1", "Test1", "1"),
-       ("TestUser2", "Test2", "1"),
-       ("TestUser3", "Test3", "1");
+    (name, login, password, salt)
+VALUES ("Adminovich", "admin", "1", 1234),
+       ("Alexey", "Alex", "1", 1234),
+       ("TestUser1", "Test1", "1", 1234),
+       ("TestUser2", "Test2", "1", 1234),
+       ("TestUser3", "Test3", "1", 1234);
 
 INSERT INTO roles
     (role_name)

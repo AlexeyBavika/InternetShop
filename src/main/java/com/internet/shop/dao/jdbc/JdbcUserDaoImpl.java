@@ -37,13 +37,14 @@ public class JdbcUserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (name, login, password) values(?,?,?);";
+        String query = "INSERT INTO users (name, login, password, salt) values(?,?,?,?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection
                     .prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
+            statement.setBytes(4, user.getSalt());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
@@ -125,7 +126,8 @@ public class JdbcUserDaoImpl implements UserDao {
         String name = resultSet.getString("name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
-        return new User(id, name, login, password, getUserRoles(id));
+        byte[] salt = resultSet.getBytes("salt");
+        return new User(id, name, login, password, getUserRoles(id), salt);
     }
 
     private Set<Role> getUserRoles(Long userId) {
