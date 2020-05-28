@@ -25,10 +25,10 @@ public class AuthorizationFilter implements Filter {
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
     private static final Logger LOGGER = Logger.getLogger(AuthorizationFilter.class);
     private final UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
-    private Map<String, List<Role.RoleName>> urls = new HashMap<>();
+    private final Map<String, List<Role.RoleName>> urls = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         urls.put("/allUsers", List.of(Role.RoleName.ADMIN));
         urls.put("/deleteUser", List.of(Role.RoleName.ADMIN));
         urls.put("/editProducts", List.of(Role.RoleName.ADMIN));

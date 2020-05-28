@@ -6,15 +6,12 @@ import com.internet.shop.lib.Service;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.service.ShoppingCartService;
-import com.internet.shop.service.UserService;
 import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Inject
     ShoppingCartDao shoppingCartDao;
-    @Inject
-    UserService userService;
 
     @Override
     public ShoppingCart addProduct(ShoppingCart shoppingCart, Product product) {
