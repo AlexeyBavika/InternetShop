@@ -9,7 +9,8 @@ addons:
 jdk:
   - openjdk11
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=alexeybavika_InternetShop
+
 cache:
   directories:
     - '$HOME/.m2/repository'
