@@ -7,7 +7,7 @@ addons:
   sonarcloud:
     organization: "alexeybavika"
     token:
-      secure: "6a543e97b8f0a9396c5e818e0794d445f02564ac"
+      secure: "$SONAR_TOKEN"
 cache:
   directories:
     - $HOME/.m2
