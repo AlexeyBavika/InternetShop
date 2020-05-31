@@ -3,7 +3,7 @@ addons:
   sonarcloud:
     organization: "alexeybavika"
     token:
-      secure: "$SONAR_TOKEN"
+      secure: "4c752579db07769b588e77a20207b4ff60604774"
 jdk:
   - openjdk11
 script:
