@@ -3,11 +3,11 @@ addons:
   sonarcloud:
     organization: "alexeybavika"
     token:
-      secure: "4c752579db07769b588e77a20207b4ff60604774"
+      secure: "$SONAR_TOKEN"
 jdk:
   - openjdk11
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=AlexeyBavika_InternetShop
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 
 cache:
   directories:
