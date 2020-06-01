@@ -23,8 +23,8 @@ public class JdbcOrderDaoImpl implements OrderDao {
     public List<Order> getUserOrders(User user) {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * from orders where user_id=?";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, user.getId());
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -40,9 +40,9 @@ public class JdbcOrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
         String query = "INSERT INTO orders (user_id) values(?);";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection
-                    .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, order.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -59,8 +59,8 @@ public class JdbcOrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> get(Long id) {
         String query = "SELECT * from orders where id = ?;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -76,8 +76,8 @@ public class JdbcOrderDaoImpl implements OrderDao {
     public List<Order> getAll() {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orders.add(getOrderFromResultSet(resultSet));
@@ -98,13 +98,20 @@ public class JdbcOrderDaoImpl implements OrderDao {
     @Override
     public boolean delete(Long id) {
         String query = "DELETE FROM orders WHERE id = ?;";
+        PreparedStatement statement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             deleteProductsFromOrder(id);
-            PreparedStatement statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             return true;
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t delete order with id " + id, e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                throw new DataProcessingException("Can`t close preparedStatement", e);
+            }
         }
     }
 
@@ -120,8 +127,8 @@ public class JdbcOrderDaoImpl implements OrderDao {
                 + "ON orders_products.product_id = products.id "
                 + "WHERE orders_products.order_id = ?;";
         List<Product> products = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -137,9 +144,9 @@ public class JdbcOrderDaoImpl implements OrderDao {
     }
 
     private void deleteProductsFromOrder(Long id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "DELETE FROM orders_products WHERE order_id=?;";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "DELETE FROM orders_products WHERE order_id=?;";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -148,17 +155,26 @@ public class JdbcOrderDaoImpl implements OrderDao {
     }
 
     private void addProductsToOrder(Order order) {
+        PreparedStatement statement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Product product : order.getProducts()) {
                 String query = "INSERT INTO orders_products(order_id, product_id) "
                         + "values(?,?);";
-                PreparedStatement statement = connection.prepareStatement(query);
+                statement = connection.prepareStatement(query);
                 statement.setLong(1, order.getId());
                 statement.setLong(2, product.getId());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add products to order", e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                throw new DataProcessingException("Can`t close preparedStatement", e);
+            }
         }
     }
 }
