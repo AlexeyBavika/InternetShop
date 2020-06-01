@@ -98,20 +98,13 @@ public class JdbcOrderDaoImpl implements OrderDao {
     @Override
     public boolean delete(Long id) {
         String query = "DELETE FROM orders WHERE id = ?;";
-        PreparedStatement statement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             deleteProductsFromOrder(id);
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             return true;
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t delete order with id " + id, e);
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                throw new DataProcessingException("Can`t close preparedStatement", e);
-            }
         }
     }
 
@@ -155,8 +148,8 @@ public class JdbcOrderDaoImpl implements OrderDao {
     }
 
     private void addProductsToOrder(Order order) {
-        PreparedStatement statement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement;
             for (Product product : order.getProducts()) {
                 String query = "INSERT INTO orders_products(order_id, product_id) "
                         + "values(?,?);";
@@ -167,14 +160,6 @@ public class JdbcOrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add products to order", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                throw new DataProcessingException("Can`t close preparedStatement", e);
-            }
         }
     }
 }
