@@ -9,7 +9,7 @@ CREATE TABLE users
     id       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name     VARCHAR(30)     NOT NULL,
     login    VARCHAR(30)     NOT NULL,
-    password VARCHAR(256)     NOT NULL,
+    password VARCHAR(256)    NOT NULL,
     salt     VARBINARY(30)   NOT NULL
 );
 
