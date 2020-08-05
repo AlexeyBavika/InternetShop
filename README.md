@@ -24,9 +24,10 @@ Please make sure that you have already installed :
     1. Clone this project from GitHub
     2. Go to /src/main/java/com/internet/shop/util/ConnectionUtil.java and fill in connection parameters to your database (url/login/password).
     3. Execute script /src/main/resources/init_database.sql
+    4. Configure Tomcat: add the artifact internet-shop:war exploded; add as URL http://localhost:8080/
 ***
 ## Running
-    1. cd to root project folder and execute command mvn clean tomcat:run
-    2. After server start, application will be available by URL http://localhost:8080/
-    3. Use login "admin" and password "1" to log in with administrator rights.
-    4. Or register new user to log in as user.
+    1. Run the project
+    2. After server starts you will be redirected to login page
+    3. You can use injected data after script executing or you can redirect to /register page to register your own user   
+    
